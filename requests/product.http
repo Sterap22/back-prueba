@@ -1,0 +1,35 @@
+@api = http://localhost:44311/api
+
+
+GET {{api}}/user/infoLog
+Content-Type: application/json
+
+###
+
+POST {{api}}/user/login
+Content-Type: application/json
+
+{
+    "user":"sthewar.rojano.escorcia@gmail.com",
+    "pass":"Sthewar2021*"
+}
+
+###
+
+POST {{api}}/user/login
+
+###
+
+POST {{api}}/user/createUser
+Content-Type: application/json
+
+{
+    "name":"sthewar1",
+    "lastName":"rojano1",
+    "typeId":1,
+    "nit":"1002257366",
+    "mail":"sthewar.rojano.escorcia@gmail.com",
+    "pass":"hola123",
+    "numPhone":"3513",
+    "userType":1
+}
