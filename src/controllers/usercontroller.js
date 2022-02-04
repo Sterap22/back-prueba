@@ -16,8 +16,9 @@ export const getLoginPage = async (req, res)=>{
 
 export const postRegisterPage = async (req, res) =>{
     const {name, lastName, typeId, nit, mail, pass, numPhone, userType} = req.body
-    console.log(req.body);
+    console.log(pass);
     try {
+        let r = Math.floor(Math.random() * (99999999 - 11111111))
         const pool = await getConnection()
         const result = await pool.request()
         .input("name", sql.VarChar, name)
@@ -25,32 +26,43 @@ export const postRegisterPage = async (req, res) =>{
         .input("typeId", sql.Int,typeId)
         .input("nit", sql.VarChar,nit)
         .input("mail", sql.VarChar,mail)
-        .input("pass", sql.VarChar,pass)
+        .input("pass", sql.VarChar,pass != "" ? pass: r.toString())
         .input("numPhone", sql.VarChar,numPhone)
         .input("userType", sql.Int,userType)
         .query(querys.postRegisterUser);
+        console.log(result.recordsets,'llego');
         if(result.rowsAffected !== 0){
-            const pool2 = await pool.request().input("id", sql.Int, 1).query(querys.getPlantilla);
-            let htmlMail = pool2.recordsets[0][0]["code"]
-            let r = Math.floor(Math.random() * (99999999 - 11111111))
-            htmlMail = htmlMail.replace(/12345678/g,r)
-            htmlMail = htmlMail.replace(/#usuario/g,name)
-            let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                port: 587,
-                secure: false,
-                auth: {
-                  user: 'moveappinfo@gmail.com',
-                  pass: 'moveAdmin2022*',
-                },
-              });
-              let info = await transporter.sendMail({
-                from: 'moveappinfo@gmail.com',
-                to: mail,
-                subject: "Autenticación de cuenta",
-                html: htmlMail,
-              });
-              res.json(funciones.getMensaje(202,result));
+            var hoy = new Date();
+            var fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear();
+            var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+            var fechaYHora = fecha + ' ' + hora;
+            const pool3 = await pool.request()
+            .input("code", sql.VarChar, r.toString())
+            .input("CreateDate", sql.VarChar, fechaYHora)
+            .input("correo", sql.VarChar, mail)
+            .query(querys.postCode);
+            if (pool3.rowsAffected !== 0) {
+                const pool2 = await pool.request().input("id", sql.Int, 1).query(querys.getPlantilla);
+                let htmlMail = pool2.recordsets[0][0]["code"]
+                htmlMail = htmlMail.replace(/12345678/g,r)
+                htmlMail = htmlMail.replace(/#usuario/g,name)
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 587,
+                    secure: false,
+                    auth: {
+                      user: 'moveappinfo@gmail.com',
+                      pass: 'moveAdmin2022*',
+                    },
+                  });
+                  let info = await transporter.sendMail({
+                    from: 'moveappinfo@gmail.com',
+                    to: mail,
+                    subject: "Autenticación de cuenta",
+                    html: htmlMail,
+                  });
+                  res.json(funciones.getMensaje(202,result));
+            }
         }else{
             res.json("Usuario no pudo ser creado");
         }

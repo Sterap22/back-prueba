@@ -29,7 +29,7 @@ Content-Type: application/json
     "typeId":1,
     "nit":"1002257366",
     "mail":"sthewar.rojano.escorcia@gmail.com",
-    "pass":"hola123",
+    "pass":"",
     "numPhone":"3513",
     "userType":1
 }
