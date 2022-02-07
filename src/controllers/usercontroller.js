@@ -9,9 +9,9 @@ const nodemailer = require("nodemailer");
 export const getLoginPage = async (req, res)=>{
     const pool = await getConnection()
     const result = await pool.request()
-    .query('select * from InfoUser');
+    .query(querys.getInfoUser);
     console.log(result)
-    res.json(result.recordset)
+    res.json({data: result.recordset,status:202})
 }; 
 
 export const postRegisterPage = async (req, res) =>{
@@ -85,7 +85,7 @@ export const postLoginRegisterPage = async (req, res) =>{
                 config.jwtSecret,{
                 expiresIn: config.jwtExpire
             });
-            res.json({data: result.recordset, token: token });
+            res.json({data: result.recordset,status:202, token: token });
         }
         else{
             res.json(funciones.getMensaje(204,"Tu número de documento y contraseña no coinciden, Verifica tus datos e intenta nuevamente.",""));

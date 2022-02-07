@@ -3,7 +3,8 @@ export {sql} ;
 
 const dbsettings = {
     user: "sa",
-    password: "Admin123456",
+    // password: "Admin123456",
+    password: "Admin123",
     database: "MuvAppBeta",
     server: "localhost",
     pool: {

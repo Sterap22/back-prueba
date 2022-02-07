@@ -20,6 +20,10 @@ POST {{api}}/user/login
 
 ###
 
+Get {{api}}/service/getServiceAct
+
+###
+
 POST {{api}}/user/createUser
 Content-Type: application/json
 
@@ -33,3 +37,22 @@ Content-Type: application/json
     "numPhone":"3513",
     "userType":1
 }
+
+###
+POST {{api}}/service/PostServices
+Content-Type: application/json
+
+{
+    "nameService": "nameService",
+    "Origen": "aqui",
+    "Destino": "alla",
+    "horaservicio": "12/12/12",
+    "assistant": "sisas",
+    "Inventory": 0,
+    "pack": 0,
+    "unpack": 0,
+    "valor": "820.000",
+    "idconductor": 1,
+    "vigente": 1,
+    "iduser": 1
+  }
