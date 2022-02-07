@@ -13,7 +13,15 @@ export const getLoginPage = async (req, res)=>{
     console.log(result)
     res.json(result.recordset)
 }; 
-
+let transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'moveappinfo@gmail.com',
+      pass: 'moveAdmin2022*',
+    },
+  });
 export const postRegisterPage = async (req, res) =>{
     const {name, lastName, typeId, nit, mail, pass, numPhone, userType} = req.body
     console.log(pass);
@@ -46,15 +54,6 @@ export const postRegisterPage = async (req, res) =>{
                 let htmlMail = pool2.recordsets[0][0]["code"]
                 htmlMail = htmlMail.replace(/12345678/g,r)
                 htmlMail = htmlMail.replace(/#usuario/g,name)
-                let transporter = nodemailer.createTransport({
-                    host: "smtp.gmail.com",
-                    port: 587,
-                    secure: false,
-                    auth: {
-                      user: 'moveappinfo@gmail.com',
-                      pass: 'moveAdmin2022*',
-                    },
-                  });
                   let info = await transporter.sendMail({
                     from: 'moveappinfo@gmail.com',
                     to: mail,
@@ -81,11 +80,20 @@ export const postLoginRegisterPage = async (req, res) =>{
         .query(querys.getInicioSession);
         const id = result.recordset[0]['id']
         if(result.rowsAffected !== 0){
+            const pool2 = await pool.request().input("id", sql.Int, 2).query(querys.getPlantilla);
+            let htmlMail = pool2.recordsets[0][0]["code"]
+            htmlMail = htmlMail.replace(/#usuario/g,result.recordset[0]['nombre'])
+              let info = await transporter.sendMail({
+                from: 'moveappinfo@gmail.com',
+                to: result.recordset[0]['correo'],
+                subject: "Autenticación de cuenta",
+                html: htmlMail,
+              });
             const token = jwt.sign({idUsuario:id},
                 config.jwtSecret,{
                 expiresIn: config.jwtExpire
             });
-            res.json({data: result.recordset, token: token });
+            res.json({status:202,data: result.recordset, token: token });
         }
         else{
             res.json(funciones.getMensaje(204,"Tu número de documento y contraseña no coinciden, Verifica tus datos e intenta nuevamente.",""));
