@@ -9,9 +9,9 @@ const nodemailer = require("nodemailer");
 export const getLoginPage = async (req, res)=>{
     const pool = await getConnection()
     const result = await pool.request()
-    .query('select * from InfoUser');
+    .query(querys.getInfoUser);
     console.log(result)
-    res.json(result.recordset)
+    res.json({data: result.recordset,status:202})
 }; 
 let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
