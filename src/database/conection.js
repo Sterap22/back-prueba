@@ -1,12 +1,14 @@
 import sql from "mssql";
 export {sql} ;
-
+/*Conection MySql*/
 const dbsettings = {
     user: "sa",
-    // password: "Admin123456",
-    password: "Admin123",
+    // user: "premov",
+    password: "Admin123456",
+    // password: "premov2021*",
     database: "MuvAppBeta",
-    server: "localhost",
+    // server: "localhost",
+    server: "192.168.20.27",
     pool: {
         max: 10,
         min: 0,

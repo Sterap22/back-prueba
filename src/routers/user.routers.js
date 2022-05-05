@@ -6,9 +6,10 @@ import { indexTemplate } from '../view/template'
 
 const router = Router()
 const base = "/api"
-
-router.get(`${base}/service/getServiceAct`, getServiceAct )
-router.post(`${base}/service/PostServices`, PostServices )
+//service
+router.get(`${base}/service/getServiceAct`,funciones.rutasProtegidas ,getServiceAct )
+router.post(`${base}/service/PostServices`,funciones.rutasProtegidas, PostServices )
+//user
 router.get(`${base}/user/infoLog`,funciones.rutasProtegidas, getLoginPage )
 router.post(`${base}/user/createUser`,postRegisterPage )
 router.post(`${base}/user/login`,postLoginRegisterPage )

@@ -24,7 +24,7 @@ let transporter = nodemailer.createTransport({
   });
 export const postRegisterPage = async (req, res) =>{
     const {name, lastName, typeId, nit, mail, pass, numPhone, userType} = req.body
-    console.log(pass);
+    console.log(req,'hola');
     try {
         let r = Math.floor(Math.random() * (99999999 - 11111111))
         const pool = await getConnection()
@@ -78,8 +78,10 @@ export const postLoginRegisterPage = async (req, res) =>{
         .input("user", sql.VarChar, user)
         .input("pass", sql.VarChar,pass)
         .query(querys.getInicioSession);
-        const id = result.recordset[0]['id']
+        console.log(result.recordset[0]['id'],' data');
         if(result.rowsAffected !== 0){
+            let id = result.recordset[0]['id']
+            console.log(id,' data2');
             const pool2 = await pool.request().input("id", sql.Int, 2).query(querys.getPlantilla);
             let htmlMail = pool2.recordsets[0][0]["code"]
             htmlMail = htmlMail.replace(/#usuario/g,result.recordset[0]['nombre'])
@@ -93,10 +95,10 @@ export const postLoginRegisterPage = async (req, res) =>{
                 config.jwtSecret,{
                 expiresIn: config.jwtExpire
             });
-            res.json({status:202,data: result.recordset, token: token });
+            return res.json({status:202,data: result.recordset, token: token });
         }
         else{
-            res.json(funciones.getMensaje(204,"Tu número de documento y contraseña no coinciden, Verifica tus datos e intenta nuevamente.",""));
+           return res.json(funciones.getMensaje(204,"Tu número de documento y contraseña no coinciden, Verifica tus datos e intenta nuevamente.",""));
         }  
     } catch (error) {
         return res.json(funciones.getMensaje(400,error.message));
