@@ -85,7 +85,7 @@ export const postLoginRegisterPage = async (req, res) =>{
             const pool2 = await pool.request().input("id", sql.Int, 2).query(querys.getPlantilla);
             let htmlMail = pool2.recordsets[0][0]["code"]
             htmlMail = htmlMail.replace(/#usuario/g,result.recordset[0]['nombre'])
-              let info = await transporter.sendMail({
+              let info = await transporter.sendMail({ 
                 from: 'moveappinfo@gmail.com',
                 to: result.recordset[0]['correo'],
                 subject: "Autenticación de cuenta",
