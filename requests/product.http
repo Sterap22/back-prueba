@@ -56,3 +56,12 @@ Content-Type: application/json
     "vigente": 1,
     "iduser": 1
   }
+
+###
+POST {{api}}/map/postMap
+Content-Type: application/json
+
+{
+    "addressexit":"calle 131c #90-20",
+    "addresarrival":"kr 152c #138d-43"
+  }
