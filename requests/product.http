@@ -65,3 +65,7 @@ Content-Type: application/json
     "addressexit":"calle 131c #90-20",
     "addresarrival":"kr 152c #138d-43"
   }
+
+
+###
+GET {{api}}/pay/card
