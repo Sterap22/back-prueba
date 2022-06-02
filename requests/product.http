@@ -68,4 +68,5 @@ Content-Type: application/json
 
 
 ###
-GET {{api}}/pay/card
+GET {{api}}/comment/get
+authorization: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTQxNDQxNDQsImV4cCI6MTY1NDE0NDc0NH0.kPeLVfRmMHVhLxqM4G4bnCGx6YM80kUtLNYJYm87L2Y"

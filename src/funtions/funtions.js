@@ -8,7 +8,6 @@ export const rutasProtegidas = Router();
 rutasProtegidas.use((req, res, next) => {
     try {
         const token = (req.headers['authorization']);
-        if (token != null) token = token.replace(/['"]+/g, '')
         const llave = process.env.JWT_SECRET_KEY;
         if (token != "" && token != undefined) {
             jwt.verify(token, llave, (err, decoded) => {

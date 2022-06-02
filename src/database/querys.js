@@ -1,5 +1,6 @@
 export const querys = {
     getInicioSession:'select*from  dbo.usuario where correo = @user and clave = @clave',
-    getProductos:'SELECT imagenes,titulo,descripcion FROM [dbo].[productoSlide]',
-    postProducto:'INSERT INTO [dbo].[productoSlide]([titulo],[descripcion],[imagenes])VALUES(@titulo,@descripcion,@imagenes)',
+    getValidarUsuario:'select*from dbo.usuario where correo = @user',
+    getComentario:'SELECT C.comentario, U.correo FROM commentUser C, usuario U WHERE C.idUsuario = U.id',
+    postRegistrarComentario:'insert into commentUser(comentario,idUsuario) values(@comment, @idUsuario)',
 }

@@ -3,12 +3,9 @@ export {sql} ;
 /*Conection MySql*/
 const dbsettings = {
     user: "sa",
-    // user: "premov",
     password: "Admin123456",
-    // password: "premov2021*",
     database: "dbPrueba",
     server: "localhost",
-    // server: "192.168.20.27",
     pool: {
         max: 10,
         min: 0,
